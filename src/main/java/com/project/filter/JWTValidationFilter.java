@@ -3,6 +3,8 @@ import java.io.IOException;
 
 import org.springframework.web.filter.GenericFilterBean;
 
+import com.project.session.Session;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
@@ -21,9 +23,13 @@ public class JWTValidationFilter extends GenericFilterBean{
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
 			throws IOException, ServletException {
 	
+		Session session  = Session.getSession();
+		
 		HttpServletRequest request = (HttpServletRequest)servletRequest;
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 		final String authorization = request.getHeader(AUTHORIZATION);
+		
+		
 		if(authorization == null || !authorization.startsWith(BEARER)) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response.getWriter().println("Auth Header is missing");
@@ -40,6 +46,17 @@ public class JWTValidationFilter extends GenericFilterBean{
 			System.out.println(claims.getSubject());
 			//String role = (String)claims.get("roles");
 			//System.out.println(role);
+			
+			int userId = (int) claims.get("userId");
+			String email = (String) claims.getSubject();
+			String password = (String) claims.get("password");
+			String role = (String) claims.get("role");
+			
+			session.setUserId(userId);
+			session.setEmail(email);
+			session.setPassword(password);
+			session.setRole(role);
+			
 			chain.doFilter(request, response);
 			
 		}
