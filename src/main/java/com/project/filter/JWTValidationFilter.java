@@ -52,6 +52,17 @@ public class JWTValidationFilter extends GenericFilterBean{
 			String password = (String) claims.get("password");
 			String role = (String) claims.get("role");
 			
+			if(!role.equalsIgnoreCase("customer")) {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				response.getWriter().println("Access Denied!");
+				return;
+			}
+			
+			System.out.println(userId);
+			System.out.println(email);
+			System.out.println(password);
+			System.out.println(role);
+			
 			session.setUserId(userId);
 			session.setEmail(email);
 			session.setPassword(password);

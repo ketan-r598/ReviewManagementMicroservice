@@ -10,7 +10,7 @@ import com.project.session.Session;
 
 @Configuration
 public class FilterConfig {
-	public static final String OWNER_PATH = "/reviews/owner/*";
+//	public static final String OWNER_PATH = "/review/*";
 	public static final String CUSTOMER_PATH = "/reviews/customer/*";
 	
 	Session session = Session.getSession();
@@ -19,15 +19,15 @@ public class FilterConfig {
 	public FilterRegistrationBean<GenericFilterBean> jwtFilter(){
 		FilterRegistrationBean<GenericFilterBean> filterRegistrationBean = new FilterRegistrationBean<>();
 		filterRegistrationBean.setFilter(new JWTValidationFilter());
-//		filterRegistrationBean.addUrlPatterns(CONTACTS_PATH);
+		filterRegistrationBean.addUrlPatterns(CUSTOMER_PATH);
 		
-		if(session.getRole().equalsIgnoreCase("customer")) {
-			filterRegistrationBean.addUrlPatterns(CUSTOMER_PATH);
-		} else if(session.getRole().equalsIgnoreCase("owner")){
-			filterRegistrationBean.addUrlPatterns(OWNER_PATH);
-		} else {
-			filterRegistrationBean.addUrlPatterns("");
-		}
+//		if(session.getRole().equalsIgnoreCase("customer")) {
+//			filterRegistrationBean.addUrlPatterns(CUSTOMER_PATH);
+//		} else if(session.getRole().equalsIgnoreCase("owner")){
+//			filterRegistrationBean.addUrlPatterns(OWNER_PATH);
+//		} else {
+////			filterRegistrationBean.addUrlPatterns("");
+//		}
 		return filterRegistrationBean;
 	}
 	
