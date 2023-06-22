@@ -1,5 +1,7 @@
 package com.project.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,11 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public void deleteReview(int reviewId) {
 		repo.deleteById(reviewId);
+	}
+
+	@Override
+	public List<Review> getAllReviews() {
+		return repo.findAll();
 	}
 
 }
