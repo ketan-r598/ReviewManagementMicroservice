@@ -13,24 +13,24 @@ import com.project.model.Review;
 import com.project.service.ReviewService;
 
 @RestController
-@RequestMapping("/users/reviews/")
+@RequestMapping("/reviews/")
 public class ReviewController {
 
 	@Autowired
 	private ReviewService service;
 	
-	@PostMapping("comment")
+	@PostMapping("customer/comment")
 	public Review addReview(@RequestBody Review review) {
 		return service.addReview(review);
 	}
 	
-	@PutMapping("editRatings/{reviewId}")
+	@PutMapping("customer/editRatings/{reviewId}")
 	public Review editReview(@PathVariable("reviewId") int reviewId, @RequestBody Review review) {
 		return service.editReview(reviewId, review);
 		
 	}
 	
-	@DeleteMapping("remove/{reviewId}")
+	@DeleteMapping("customer/remove/{reviewId}")
 	public void deleteReview(@PathVariable int reviewId) {
 		service.deleteReview(reviewId);
 	}
